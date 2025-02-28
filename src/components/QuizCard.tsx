@@ -1,8 +1,17 @@
-//import React from 'react';
 import { Link } from "react-router-dom";
+import { LucideIcon } from "lucide-react";
 
-// Componente QuizCard simplificado usando solo Tailwind
-const QuizCard = ({ title, description, icon: Icon, difficulty, questionsCount, category, href }) => (
+type QuizCardProps = {
+  title: string,
+  description: string,
+  icon: LucideIcon,
+  difficulty: string,
+  questionsCount: number,
+  category: string,
+  href: string
+}
+
+const QuizCard: React.FC<QuizCardProps> = ({ title, description, icon: Icon, difficulty, questionsCount, category, href }) => (
   <div className="h-full rounded-lg border border-gray-200 bg-white p-6 hover:shadow-lg transition-shadow">
     <Link to={href}>
       <div className="flex items-center justify-between">
