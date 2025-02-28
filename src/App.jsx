@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-
 import Quizzes from './pages/Quizzes'
 import Navbar from './components/navbar'
 import Home from './pages/Home'
@@ -8,6 +7,7 @@ import Profile from './pages/Profile'
 import QuizCapitales from './components/QuizCapitales'
 import QuizzesEconomia from './components/QuizzesEconomia'
 import QuizEconomiaBasica from './pages/QuizEconomiaBasica'
+import Quiz from './pages/Quiz'
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
         <Route path="/quizzes/capitales-del-mundo" element={<QuizCapitales />}/>
         <Route path="/quizzes/economia" element={<QuizzesEconomia />}/>
         <Route path="/quizzes/economia-basica" element={<QuizEconomiaBasica />}/>
+        <Route path="/quizzes/:id" element={<Quiz />} />
       </Routes>
     </div>
   )
