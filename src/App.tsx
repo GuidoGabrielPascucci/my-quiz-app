@@ -4,7 +4,7 @@ import Quiz from './pages/Quiz.jsx'
 import Quizzes from './pages/Quizzes.jsx'
 import CreateQuiz from './pages/CreateQuiz.jsx'
 import Profile from './pages/Profile.jsx'
-import Navbar from './components/navbar.jsx'
+import Navbar from './components/Navbar.jsx'
 
 function App() {
   return (
