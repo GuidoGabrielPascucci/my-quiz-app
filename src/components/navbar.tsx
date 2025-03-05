@@ -7,6 +7,7 @@ const Navbar = () => {
     <nav className="bg-blue-600 shadow-lg">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
+          
           {/* Logo y título */}
           <div className="flex items-center">
             <span className="text-white text-xl font-bold">QuizApp</span>
@@ -51,6 +52,7 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
+          
         </div>
 
         {/* Menú móvil */}

@@ -1,20 +1,16 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Quiz from '../types/quizz.type';
+import { Brain, Book, Code, Coins, Music, Gamepad, LucideIcon } from "lucide-react"; // Importamos los íconos que usaremos
+import { CategorySection } from '../components/CategorySection';
+import { QuizzesContext } from '../context/QuizzesContext';
+import QuizCard from '../components/QuizCard';
 
 // Datos de ejemplo
 const popularQuizzes = [
   { id: 1, title: 'Capitales del Mundo', category: 'Geografía', plays: 1500, difficulty: 'Media' },
   { id: 2, title: 'Historia Argentina', category: 'Historia', plays: 1200, difficulty: 'Difícil' },
   { id: 3, title: 'Cultura General', category: 'Varios', plays: 2000, difficulty: 'Fácil' }
-];
-
-const categories = [
-  { id: 1, name: 'Geografía', icon: '🌎', quizCount: 25 },
-  { id: 2, name: 'Historia', icon: '📚', quizCount: 30 },
-  { id: 3, name: 'Ciencia', icon: '🔬', quizCount: 20 },
-  { id: 4, name: 'Deportes', icon: '⚽', quizCount: 15 },
-  { id: 5, name: 'Arte', icon: '🎨', quizCount: 18 },
-  { id: 6, name: 'Música', icon: '🎵', quizCount: 22 }
 ];
 
 const featuredQuiz = {
@@ -25,9 +21,51 @@ const featuredQuiz = {
   participants: 350
 };
 
+function mapCategoriesToIcons(): Record<string, LucideIcon> {
+
+  const categoryIcons: Record<string, LucideIcon> = {
+    science: Brain,
+    history: Book,
+    programming: Code,
+    music: Music,
+    videogames: Gamepad,
+    economy: Coins
+  };
+
+  return categoryIcons;
+
+};
+
+function getCategories(quizzes: Quiz[]) {
+  const uniqueCategories = [...new Set(quizzes.map(q => q.category))];
+  return uniqueCategories;
+}
+
 const Home = () => {
+
+  const quizzesContext = useContext(QuizzesContext);
+  let quizzesByCategory: Record<string, Quiz[]> = {};
+
+  if (quizzesContext) {
+    quizzesByCategory = quizzesContext.quizzesByCategory;
+    const { loading, error } = quizzesContext;
+
+    if (loading) return <p>⏳ Cargando quizzes...</p>;
+    if (error) return <p>❌ Error: {error}</p>;
+
+    // Mapear categorias con iconos
+    //const categoryIcons = mapCategoriesToIcons();
+    // Obtener array de categorias
+    //const categories = getCategories(quizzes);
+    // Obtengo los quizzes, juntos por categoría
+    //const quizzesByCategory = getQuizzesByCategory(quizzes);
+  }
+
+  const quizzSorpresa = quizzesByCategory['economy'][0]
+
   return (
     <div className="min-h-screen bg-gray-50">
+
       {/* Hero Section */}
       <section className="bg-blue-600 text-white py-16">
         <div className="max-w-6xl mx-auto px-4">
@@ -82,23 +120,21 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-12 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-gray-800 mb-8">Categorías</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map(category => (
-              <Link
-                key={category.id}
-                to={`/category/${category.id}`}
-                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 text-center"
-              >
-                <span className="text-4xl mb-2 block">{category.icon}</span>
-                <h3 className="font-medium text-gray-800 mb-1">{category.name}</h3>
-                <p className="text-sm text-gray-500">{category.quizCount} quizzes</p>
-              </Link>
-            ))}
-          </div>
+      <section className="py-12">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className='text-2xl font-bold text-gray-800'>Haz este rico Quizz!</h2>
+
+          <QuizCard
+            title={quizzSorpresa.title}
+            description={quizzSorpresa.description}
+            category={quizzSorpresa.category}
+            difficulty={quizzSorpresa.difficulty}
+            href={`/quizzes/${quizzSorpresa.id}`}
+            icon={Brain}
+            questionsCount={quizzSorpresa.questionsCount}
+            key={quizzSorpresa.id}
+          />
+          
         </div>
       </section>
 
@@ -118,13 +154,12 @@ const Home = () => {
                     <h3 className="font-semibold text-lg text-gray-800">
                       {quiz.title}
                     </h3>
-                    <span className={`px-3 py-1 rounded-full text-sm ${
-                      quiz.difficulty === 'Fácil' 
-                        ? 'bg-green-100 text-green-800'
-                        : quiz.difficulty === 'Media'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-red-100 text-red-800'
-                    }`}>
+                    <span className={`px-3 py-1 rounded-full text-sm ${quiz.difficulty === 'Fácil'
+                      ? 'bg-green-100 text-green-800'
+                      : quiz.difficulty === 'Media'
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : 'bg-red-100 text-red-800'
+                      }`}>
                       {quiz.difficulty}
                     </span>
                   </div>
@@ -147,23 +182,24 @@ const Home = () => {
         </div>
       </section>
 
-        {/* Call to Action Section */}
-        <section className="py-12 bg-blue-50">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              ¿Tienes conocimientos para compartir?
-            </h2>
-            <p className="text-gray-600 mb-8">
-              Crea tus propios quizzes y compártelos con la comunidad
-            </p>
-            <Link
-              to="/crear"
-              className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition duration-300"
-            >
-              Crear Quiz
-            </Link>
-          </div>
-        </section>
+      {/* Call to Action Section */}
+      <section className="py-12 bg-blue-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            ¿Tienes conocimientos para compartir?
+          </h2>
+          <p className="text-gray-600 mb-8">
+            Crea tus propios quizzes y compártelos con la comunidad
+          </p>
+          <Link
+            to="/crear"
+            className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition duration-300"
+          >
+            Crear Quiz
+          </Link>
+        </div>
+      </section>
+
     </div>
   );
 };
