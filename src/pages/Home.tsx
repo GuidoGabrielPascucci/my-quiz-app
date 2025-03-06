@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Quiz from '../types/quizz.type';
 import { Brain, Book, Code, Coins, Music, Gamepad, LucideIcon } from "lucide-react"; // Importamos los íconos que usaremos
-import { CategorySection } from '../components/CategorySection';
 import { QuizzesContext } from '../context/QuizzesContext';
 import QuizCard from '../components/QuizCard';
 
@@ -67,7 +66,7 @@ const Home = () => {
     <div className="min-h-screen bg-gray-50">
 
       {/* Hero Section */}
-      <section className="bg-blue-600 text-white py-16">
+      <section className="py-64 border-4">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">
@@ -76,10 +75,7 @@ const Home = () => {
             <p className="text-xl mb-8">
               Pon a prueba tus conocimientos con miles de quizzes en diferentes categorías
             </p>
-            <Link
-              to="/quizzes"
-              className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition duration-300"
-            >
+            <Link to="/quizzes" className="bg-blue-600 text-white px-24 py-5 inline-block mt-4 rounded-full font-semibold hover:bg-purple-700 hover:shadow-xl transition duration-500">
               Comenzar a Jugar
             </Link>
           </div>
@@ -202,6 +198,7 @@ const Home = () => {
 
     </div>
   );
+
 };
 
 export default Home;
