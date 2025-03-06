@@ -116,10 +116,11 @@ const Home = () => {
         </div>
       </section>
 
+{/* Random Quizz Section */}
       <section className="py-12">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className='text-2xl font-bold text-gray-800'>Haz este rico Quizz!</h2>
-
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-800 mb-8">Quizz Random</h2>
+<div className="">
           <QuizCard
             title={quizzSorpresa.title}
             description={quizzSorpresa.description}
@@ -130,7 +131,12 @@ const Home = () => {
             questionsCount={quizzSorpresa.questionsCount}
             key={quizzSorpresa.id}
           />
-          
+</div>
+          <div className="text-center mt-8">
+            <Link to="/quizzes" className="text-blue-600 hover:text-blue-700 font-medium">
+              Ver todos los quizzes →
+            </Link>
+          </div>          
         </div>
       </section>
 
