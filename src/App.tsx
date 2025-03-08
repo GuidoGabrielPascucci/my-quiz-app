@@ -6,8 +6,9 @@ import CreateQuiz from './pages/CreateQuiz.jsx'
 import Profile from './pages/Profile.jsx'
 import Navbar from './components/navbar.jsx'
 import { QuizzesProvider } from "./context/QuizzesContext.jsx";
+import Auth from "./components/Auth.jsx";
 
-function App() {  
+function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <QuizzesProvider>
@@ -18,6 +19,7 @@ function App() {
           <Route path="/crear" element={<CreateQuiz />} />
           <Route path="/perfil" element={<Profile />} />
           <Route path="/quizzes/:id" element={<Quiz />} />
+          <Route path="/auth" element={<Auth />} />
         </Routes>
       </QuizzesProvider>
     </div>
