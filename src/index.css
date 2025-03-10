@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+.section-foto {
+    /*
+    background-image: url("https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    */
+
+    background: rgb(2, 0, 36);
+    background: linear-gradient(
+        180deg,
+        rgba(2, 0, 36, 1) 0%,
+        rgba(9, 9, 121, 1) 80%
+    );
+}
+
 @layer base {
     :root {
         --background: 0 0% 100%;
